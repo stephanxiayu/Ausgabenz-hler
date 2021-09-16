@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
       home: MyHomePage(),
@@ -30,13 +31,24 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   final List<Transaction> transaction = [
     Transaction(
-        id: "t1", title: "Neue Schuhe", amount: 69.99, date: DateTime.now())
+      id: "t1",
+      title: "Neue Schuhe",
+      amount: 69.99,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: "t2",
+      title: "Neue Elefanten",
+      amount: 99969.99,
+      date: DateTime.now(),
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Center(child: Text("Ausgaben Tracker")),
         elevation: 9,
       ),
       body: Column(
@@ -50,12 +62,27 @@ class MyHomePage extends StatelessWidget {
               child: Text("Text"),
             ),
           ),
-          Container(
-            width: double.infinity,
-            child: Card(
-              elevation: 9,
-              child: Text("Text"),
-            ),
+          Column(
+            children: transaction.map((tx) {
+              return Card(
+                elevation: 9,
+                child: Row(children: [
+                  Container(
+                    child: Text(
+                      tx.amount.toString(),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text(tx.title),
+                      Text(
+                        tx.date.toString(),
+                      ),
+                    ],
+                  )
+                ]),
+              );
+            }).toList(),
           ),
         ],
       ),

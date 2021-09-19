@@ -1,3 +1,4 @@
+import 'package:ausgabenplaner/chart_bar.dart';
 import 'package:ausgabenplaner/model/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -17,7 +18,19 @@ class Cart extends StatelessWidget {
           totalSum += recentTransactions[i].amount;
         }
       }
-      return {'day': DateFormat.E().format(weekDay), 'amount': totalSum};
+      return {
+        'day': DateFormat.E().format(weekDay).substring(0, 1),
+        'amount': totalSum
+      };
+    });
+  }
+
+  double get totalSpending {
+    return groupTransactionValues.fold(0.0, (
+      sum,
+      item,
+    ) {
+      return sum + item['amount'];
     });
   }
 
@@ -27,9 +40,15 @@ class Cart extends StatelessWidget {
       elevation: 9,
       margin: EdgeInsets.all(10),
       child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: groupTransactionValues.map((data) {
-        return Text('${data['day']}:${data['amount']}');
-      }).toList()),
+            return ChartBar(
+                data['day'],
+                data['amount'],
+                totalSpending == 0.0
+                    ? 0.0
+                    : (data['amount'] as double) / totalSpending);
+          }).toList()),
     );
   }
 }

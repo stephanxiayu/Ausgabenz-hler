@@ -1,7 +1,4 @@
 import 'package:ausgabenplaner/home.dart';
-import 'package:ausgabenplaner/model/transaction.dart';
-import 'package:ausgabenplaner/transaction_list.dart';
-import 'package:ausgabenplaner/widget/newtransaction.dart';
 
 import 'package:ausgabenplaner/ads/ads.dart';
 
